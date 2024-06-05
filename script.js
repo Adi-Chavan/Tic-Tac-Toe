@@ -5,6 +5,7 @@ let winnerAlert = document.querySelector(".winner-alert");
 let msg = document.querySelector(".winner-alert > h1");
 
 let turnO = true;
+let countClick = 0;
 
 const winnerPattern = [
     [0,1,2],
@@ -25,6 +26,7 @@ let resetGame = () => {
         box.innerText = "";
         box.disabled = false;
     };
+    countClick = 0;
 };
 
 let disableBox = () => {
@@ -39,6 +41,21 @@ let showWinner = (winner) => {
     disableBox();
 }
 
+//Draw
+
+let draw =() => {
+    let isWinner = checkWinner();
+    countClick++;
+    if(countClick == 9 && !isWinner){
+        showDraw();
+    }
+}
+
+let showDraw = () =>{
+    msg.innerText = `Game Is Draw`;
+    winnerAlert.classList.remove("hide");
+    disableBox();
+}
 
 let checkWinner = () => {
     for(let pattern of winnerPattern){
@@ -70,6 +87,8 @@ boxes.forEach((box) => {
         }
         box.disabled = true;
         checkWinner();
+       
+       draw();
     })
 });
 
